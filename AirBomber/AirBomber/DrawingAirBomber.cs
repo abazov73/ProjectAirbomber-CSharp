@@ -222,5 +222,14 @@ namespace AirBomber
                 _startPosY = _pictureHeight.Value - _airBomberHeight;
             }
         }
+
+        /// <summary>
+        /// Получение текущей позиции объекта
+        /// </summary>
+        /// <returns></returns>
+        public (float Left, float Right, float Top, float Bottom) GetCurrentPosition()
+        {
+            return (_startPosX, _startPosY, _startPosX + _airBomberWidth, _startPosY + _airBomberHeight);
+        }
     }
 }
