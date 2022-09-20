@@ -67,5 +67,33 @@ namespace AirBomber
             _airBomber?.ChangeBorders(pictureBoxAirBomber.Width, pictureBoxAirBomber.Height);
             Draw();
         }
+
+        /// <summary>
+		/// Метод установки данных
+		/// </summary>
+		private void SetData()
+        {
+            Random rnd = new();
+            _airBomber.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxAirBomber.Width, pictureBoxAirBomber.Height);
+            toolStripStatusLabelSpeed.Text = $"Скорость: {_airBomber.AirBomber.Speed}";
+            toolStripStatusLabelWeight.Text = $"Вес: {_airBomber.AirBomber.Weight}";
+            toolStripStatusLabelBodyColor.Text = $"Цвет: {_airBomber.AirBomber.BodyColor.Name}";
+        }
+
+        /// <summary>
+        /// Обработка нажатия кнопки "Модификация"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonCreateModif_Click(object sender, EventArgs e)
+        {
+            Random rnd = new();
+            _airBomber = new DrawingHeavyAirBomber(rnd.Next(100, 300), rnd.Next(1000, 2000),
+                Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                Convert.ToBoolean(rnd.Next(0, 2)), Convert.ToBoolean(rnd.Next(0, 2)), Convert.ToBoolean(rnd.Next(0, 2)));
+            SetData();
+            Draw();
+        }
     }
 }

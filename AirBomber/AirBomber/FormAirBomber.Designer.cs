@@ -38,6 +38,7 @@
             this.buttonLeft = new System.Windows.Forms.Button();
             this.buttonDown = new System.Windows.Forms.Button();
             this.buttonRight = new System.Windows.Forms.Button();
+            this.buttonCreateModif = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAirBomber)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -143,11 +144,22 @@
             this.buttonRight.UseVisualStyleBackColor = true;
             this.buttonRight.Click += new System.EventHandler(this.buttonMove_Click);
             // 
+            // buttonCreateModif
+            // 
+            this.buttonCreateModif.Location = new System.Drawing.Point(112, 395);
+            this.buttonCreateModif.Name = "buttonCreateModif";
+            this.buttonCreateModif.Size = new System.Drawing.Size(120, 29);
+            this.buttonCreateModif.TabIndex = 7;
+            this.buttonCreateModif.Text = "Модификация";
+            this.buttonCreateModif.UseVisualStyleBackColor = true;
+            this.buttonCreateModif.Click += new System.EventHandler(this.buttonCreateModif_Click);
+            // 
             // FormAirBomber
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 453);
+            this.Controls.Add(this.buttonCreateModif);
             this.Controls.Add(this.buttonCreateAirBomber);
             this.Controls.Add(this.buttonRight);
             this.Controls.Add(this.buttonDown);
@@ -177,5 +189,6 @@
         private Button buttonLeft;
         private Button buttonDown;
         private Button buttonRight;
+        private Button buttonCreateModif;
     }
 }
