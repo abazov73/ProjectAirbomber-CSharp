@@ -24,8 +24,7 @@ namespace AirBomber
         private void buttonCreateAirBomber_Click(object sender, EventArgs e)
         {
             Random rnd = new();
-            _airBomber = new DrawingAirBomber();
-            _airBomber.Init(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)));
+            _airBomber = new DrawingAirBomber(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)));
             _airBomber.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxAirBomber.Width, pictureBoxAirBomber.Height);
             toolStripStatusLabelSpeed.Text = $"Скорость: {_airBomber.AirBomber.Speed}";
             toolStripStatusLabelWeight.Text = $"Вес: {_airBomber.AirBomber.Weight}";

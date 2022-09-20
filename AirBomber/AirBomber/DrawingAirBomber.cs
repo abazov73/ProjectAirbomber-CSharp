@@ -42,10 +42,9 @@ namespace AirBomber
         /// <param name="speed">Скорость</param>
         /// <param name="weight">Вес бомбардировщика</param>
         /// <param name="bodyColor">Цвет корпуса</param>
-        public void Init(int speed, float weight, Color bodyColor)
+        public DrawingAirBomber(int speed, float weight, Color bodyColor)
         {
-            AirBomber = new EntityAirBomber();
-            AirBomber.Init(speed, weight, bodyColor);
+            AirBomber = new EntityAirBomber(speed, weight, bodyColor);
         }
 
         /// <summary>
