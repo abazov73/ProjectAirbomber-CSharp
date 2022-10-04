@@ -3,6 +3,10 @@ namespace AirBomber
     public partial class FormAirBomber : Form
     {
         private DrawingAirBomber _airBomber;
+        /// <summary>
+        /// Выбранный объект
+        /// </summary>
+        public DrawingAirBomber SelectedAirBomber { get; private set; }
 
         public FormAirBomber()
         {
@@ -24,11 +28,14 @@ namespace AirBomber
         private void buttonCreateAirBomber_Click(object sender, EventArgs e)
         {
             Random rnd = new();
-            _airBomber = new DrawingAirBomber(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)));
-            _airBomber.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxAirBomber.Width, pictureBoxAirBomber.Height);
-            toolStripStatusLabelSpeed.Text = $"Скорость: {_airBomber.AirBomber.Speed}";
-            toolStripStatusLabelWeight.Text = $"Вес: {_airBomber.AirBomber.Weight}";
-            toolStripStatusLabelBodyColor.Text = $"Цвет: {_airBomber.AirBomber.BodyColor.Name}";
+            Color color = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
+            ColorDialog dialog = new();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                color = dialog.Color;
+            }
+            _airBomber = new DrawingAirBomber(rnd.Next(100, 300), rnd.Next(1000, 2000), color);
+            SetData();
             Draw();
         }
         /// <summary>
@@ -88,12 +95,31 @@ namespace AirBomber
         private void buttonCreateModif_Click(object sender, EventArgs e)
         {
             Random rnd = new();
+            Color color = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
+            ColorDialog dialog = new();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                color = dialog.Color;
+            }
+            Color dopColor = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
+            ColorDialog dialogDop = new();
+            if (dialogDop.ShowDialog() == DialogResult.OK)
+            {
+                dopColor = dialogDop.Color;
+            }
             _airBomber = new DrawingHeavyAirBomber(rnd.Next(100, 300), rnd.Next(1000, 2000),
-                Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-                Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                color,
+                dopColor,
                 Convert.ToBoolean(rnd.Next(0, 2)), Convert.ToBoolean(rnd.Next(0, 2)), Convert.ToBoolean(rnd.Next(0, 2)));
             SetData();
             Draw();
+        }
+
+        private void buttonSelect_Click(object sender, EventArgs e)
+        {
+            if (_airBomber == null) return;
+            SelectedAirBomber = _airBomber;
+            DialogResult = DialogResult.OK;
         }
     }
 }

@@ -39,6 +39,7 @@
             this.buttonDown = new System.Windows.Forms.Button();
             this.buttonRight = new System.Windows.Forms.Button();
             this.buttonCreateModif = new System.Windows.Forms.Button();
+            this.buttonSelect = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAirBomber)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -154,11 +155,22 @@
             this.buttonCreateModif.UseVisualStyleBackColor = true;
             this.buttonCreateModif.Click += new System.EventHandler(this.buttonCreateModif_Click);
             // 
+            // buttonSelect
+            // 
+            this.buttonSelect.Location = new System.Drawing.Point(668, 394);
+            this.buttonSelect.Name = "buttonSelect";
+            this.buttonSelect.Size = new System.Drawing.Size(94, 29);
+            this.buttonSelect.TabIndex = 8;
+            this.buttonSelect.Text = "Выбрать";
+            this.buttonSelect.UseVisualStyleBackColor = true;
+            this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
+            // 
             // FormAirBomber
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 453);
+            this.Controls.Add(this.buttonSelect);
             this.Controls.Add(this.buttonCreateModif);
             this.Controls.Add(this.buttonCreateAirBomber);
             this.Controls.Add(this.buttonRight);
@@ -190,5 +202,6 @@
         private Button buttonDown;
         private Button buttonRight;
         private Button buttonCreateModif;
+        private Button buttonSelect;
     }
 }
