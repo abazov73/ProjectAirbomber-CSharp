@@ -227,7 +227,7 @@ namespace AirBomber
         /// Получение текущей позиции объекта
         /// </summary>
         /// <returns></returns>
-        public (float Left, float Right, float Top, float Bottom) GetCurrentPosition()
+        public (float Left, float Top, float Right, float Bottom) GetCurrentPosition()
         {
             return (_startPosX, _startPosY, _startPosX + _airBomberWidth, _startPosY + _airBomberHeight);
         }

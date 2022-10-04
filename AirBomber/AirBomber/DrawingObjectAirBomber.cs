@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace AirBomber
 {
-    internal class DrawingObject : IDrawingObject
+    internal class DrawingObjectAirBomber : IDrawingObject
     {
         private DrawingAirBomber _airBomber = null;
 
-        public DrawingObject(DrawingAirBomber airBomber)
+        public DrawingObjectAirBomber(DrawingAirBomber airBomber)
         {
             _airBomber = airBomber;
         }
 
         public float Step => _airBomber?.AirBomber?.Step ?? 0;
 
-        public (float Left, float Right, float Top, float Bottom) GetCurrentPosition()
+        public (float Left, float Top, float Right, float Bottom) GetCurrentPosition()
         {
             return _airBomber?.GetCurrentPosition() ?? default;
         }

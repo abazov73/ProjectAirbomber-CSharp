@@ -38,6 +38,6 @@ namespace AirBomber
         /// Получение текущей позиции объекта
         /// </summary>
         /// <returns></returns>
-        (float Left, float Right, float Top, float Bottom) GetCurrentPosition();
+        (float Left, float Top, float Right, float Bottom) GetCurrentPosition();
     }
 }
