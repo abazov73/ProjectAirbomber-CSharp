@@ -90,7 +90,7 @@ namespace AirBomber
             Shaking();
             for (int i = 0; i < _setAirBombers.Count; i++)
             {
-                var airBomber = _setAirBombers.Get(i);
+                var airBomber = _setAirBombers[i];
                 if (airBomber != null)
                 {
                     return _map.CreateMap(_pictureWidth, _pictureHeight, airBomber);
@@ -119,11 +119,11 @@ namespace AirBomber
             int j = _setAirBombers.Count - 1;
             for (int i = 0; i < _setAirBombers.Count; i++)
             {
-                if (_setAirBombers.Get(i) == null)
+                if (_setAirBombers[i] == null)
                 {
                     for (; j > i; j--)
                     {
-                        var car = _setAirBombers.Get(j);
+                        var car = _setAirBombers[j];
                         if (car != null)
                         {
                             _setAirBombers.Insert(car, i);
@@ -165,8 +165,8 @@ namespace AirBomber
             int numOfObjectsInRow = _pictureWidth / _placeSizeWidth;
             for (int i = 0; i < _setAirBombers.Count; i++)
             {
-                _setAirBombers.Get(i)?.SetObject((numOfObjectsInRow - (i % numOfObjectsInRow) - 1) * _placeSizeWidth, (i / numOfObjectsInRow) * _placeSizeHeight, _pictureWidth, _pictureHeight);
-                _setAirBombers.Get(i)?.DrawingObject(g);
+                _setAirBombers[i]?.SetObject((numOfObjectsInRow - (i % numOfObjectsInRow) - 1) * _placeSizeWidth, (i / numOfObjectsInRow) * _placeSizeHeight, _pictureWidth, _pictureHeight);
+                _setAirBombers[i]?.DrawingObject(g);
             }
         }
     }

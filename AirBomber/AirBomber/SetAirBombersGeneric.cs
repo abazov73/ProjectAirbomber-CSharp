@@ -10,20 +10,24 @@ namespace AirBomber
         where T : class
     {
         /// <summary>
-		/// Массив объектов, которые храним
+		/// Список объектов, которые храним
 		/// </summary>
-		private readonly T[] _places;
+		private readonly List<T> _places;
         /// <summary>
-        /// Количество объектов в массиве
+        /// Количество объектов в списке
         /// </summary>
-        public int Count => _places.Length;
+        public int Count => _places.Count;
+
+        private readonly int _maxCount;
         /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="count"></param>
+        /// 
         public SetAirBombersGeneric(int count)
         {
-            _places = new T[count];
+            _maxCount = count;
+            _places = new List<T>();
         }
         /// <summary>
         /// Добавление объекта в набор
@@ -32,7 +36,9 @@ namespace AirBomber
         /// <returns></returns>
         public int Insert(T airBomber)
         {
-            return Insert(airBomber, 0);
+            if (_places.Count >= _maxCount) return -1;
+            _places.Insert(0, airBomber);
+            return 0;
         }
         /// <summary>
         /// Добавление объекта в набор на конкретную позицию
@@ -42,30 +48,9 @@ namespace AirBomber
         /// <returns></returns>
         public int Insert(T airBomber, int position)
         {
-            if (position >= _places.Length)
-            {
-                return -1;
-            }
-            if (_places[position] != null)
-            {
-                int indexNull = -1;
-                for (int i = position; i < _places.Length; i++)
-                {
-                    if (_places[i] == null)
-                    {
-                        indexNull = i;
-                        break;
-                    }
-                }
-                if (indexNull == -1) return -1;
-                for (int i = indexNull; i > position; i--)
-                {
-                    T tmp = _places[i];
-                    _places[i] = _places[i - 1];
-                    _places[i - 1] = tmp;
-                }
-            }
-            _places[position] = airBomber;
+            if (position < 0 || position >= _maxCount) return -1;
+            if (_places.Count >= _maxCount) return -1;
+            _places.Insert(position, airBomber);
             return position;
         }
         /// <summary>
@@ -75,12 +60,9 @@ namespace AirBomber
         /// <returns></returns>
         public T Remove(int position)
         {
-            if (position >= _places.Length)
-            {
-                return null;
-            }
+            if (position < 0 || position >= _maxCount) return null;
             T removedObject = _places[position];
-            _places[position] = null;
+            _places.RemoveAt(position);
             return removedObject;
         }
         /// <summary>
@@ -88,13 +70,17 @@ namespace AirBomber
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public T Get(int position)
+        public T this[int position]
         {
-            if (position >= _places.Length)
+            get
             {
-                return null;
+                if (position < 0 || position >= _maxCount) return null;
+                return _places[position];
             }
-            return _places[position];
+            set
+            {
+                if (position < 0 || position >= _maxCount) Insert(value, position);
+            }
         }
     }
 }
