@@ -88,13 +88,9 @@ namespace AirBomber
         public Bitmap ShowOnMap()
         {
             Shaking();
-            for (int i = 0; i < _setAirBombers.Count; i++)
+            foreach (var airBomber in _setAirBombers.GetAirBombers())
             {
-                var airBomber = _setAirBombers[i];
-                if (airBomber != null)
-                {
-                    return _map.CreateMap(_pictureWidth, _pictureHeight, airBomber);
-                }
+                return _map.CreateMap(_pictureWidth, _pictureHeight, airBomber);
             }
             return new(_pictureWidth, _pictureHeight);
         }
@@ -163,10 +159,12 @@ namespace AirBomber
         private void DrawAirBombers(Graphics g)
         {
             int numOfObjectsInRow = _pictureWidth / _placeSizeWidth;
-            for (int i = 0; i < _setAirBombers.Count; i++)
+            int i = 0;
+            foreach (var airBomber in _setAirBombers.GetAirBombers())
             {
-                _setAirBombers[i]?.SetObject((numOfObjectsInRow - (i % numOfObjectsInRow) - 1) * _placeSizeWidth, (i / numOfObjectsInRow) * _placeSizeHeight, _pictureWidth, _pictureHeight);
-                _setAirBombers[i]?.DrawingObject(g);
+                airBomber.SetObject((numOfObjectsInRow - (i % numOfObjectsInRow) - 1) * _placeSizeWidth, (i / numOfObjectsInRow) * _placeSizeHeight, _pictureWidth, _pictureHeight);
+                airBomber.DrawingObject(g);
+                i++;
             }
         }
     }

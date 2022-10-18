@@ -82,5 +82,24 @@ namespace AirBomber
                 if (position < 0 || position >= _maxCount) Insert(value, position);
             }
         }
+
+        /// <summary>
+        /// Проход по набору до первого пустого
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<T> GetAirBombers()
+        {
+            foreach (var airBomber in _places)
+            {
+                if (airBomber != null)
+                {
+                    yield return airBomber;
+                }
+                else
+                {
+                    yield break;
+                }
+            }
+        }
     }
 }
