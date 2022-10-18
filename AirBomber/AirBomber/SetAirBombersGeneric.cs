@@ -32,26 +32,7 @@ namespace AirBomber
         /// <returns></returns>
         public int Insert(T airBomber)
         {
-            if (_places[0] != null) {
-                int indexNull = -1;
-                for (int i = 0; i < _places.Length; i++)
-                {
-                    if (_places[i] == null)
-                    {
-                        indexNull = i;
-                        break;
-                    }
-                }
-                if (indexNull == -1) return -1;
-                for (int i = indexNull; i > 0; i--)
-                {
-                    T tmp = _places[i];
-                    _places[i] = _places[i - 1];
-                    _places[i - 1] = tmp;
-                }
-            }
-            _places[0] = airBomber;
-            return 0;
+            return Insert(airBomber, 0);
         }
         /// <summary>
         /// Добавление объекта в набор на конкретную позицию
@@ -77,7 +58,7 @@ namespace AirBomber
                     }
                 }
                 if (indexNull == -1) return -1;
-                for (int i = indexNull; i > position; i++)
+                for (int i = indexNull; i > position; i--)
                 {
                     T tmp = _places[i];
                     _places[i] = _places[i - 1];

@@ -165,7 +165,7 @@ namespace AirBomber
             int numOfObjectsInRow = _pictureWidth / _placeSizeWidth;
             for (int i = 0; i < _setAirBombers.Count; i++)
             {
-                _setAirBombers.Get(i)?.SetObject((i % numOfObjectsInRow) * _placeSizeWidth, (i / numOfObjectsInRow) * _placeSizeHeight, _pictureWidth, _pictureHeight);
+                _setAirBombers.Get(i)?.SetObject((numOfObjectsInRow - (i % numOfObjectsInRow) - 1) * _placeSizeWidth, (i / numOfObjectsInRow) * _placeSizeHeight, _pictureWidth, _pictureHeight);
                 _setAirBombers.Get(i)?.DrawingObject(g);
             }
         }

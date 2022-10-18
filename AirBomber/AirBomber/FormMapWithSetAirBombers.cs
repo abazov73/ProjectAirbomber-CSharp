@@ -58,8 +58,8 @@ namespace AirBomber
             FormAirBomber form = new();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                DrawingObjectAirBomber car = new(form.SelectedAirBomber);
-                if (_mapAirBombersCollectionGeneric + car != -1)
+                DrawingObjectAirBomber airBomber = new(form.SelectedAirBomber);
+                if (_mapAirBombersCollectionGeneric + airBomber != -1)
                 {
                     MessageBox.Show("Объект добавлен");
                     pictureBox.Image = _mapAirBombersCollectionGeneric.ShowSet();
