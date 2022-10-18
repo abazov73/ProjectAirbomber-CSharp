@@ -36,7 +36,7 @@ namespace AirBomber
         /// <returns></returns>
         public int Insert(T airBomber)
         {
-            if (_places.Count >= _maxCount) return -1;
+            if (_places.Count + 1 >= _maxCount) return -1;
             _places.Insert(0, airBomber);
             return 0;
         }
@@ -49,7 +49,7 @@ namespace AirBomber
         public int Insert(T airBomber, int position)
         {
             if (position < 0 || position >= _maxCount) return -1;
-            if (_places.Count >= _maxCount) return -1;
+            if (_places.Count + 1 >= _maxCount) return -1;
             _places.Insert(position, airBomber);
             return position;
         }
