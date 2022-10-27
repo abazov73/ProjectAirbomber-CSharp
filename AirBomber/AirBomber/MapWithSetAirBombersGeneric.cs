@@ -53,11 +53,11 @@ namespace AirBomber
         /// Перегрузка оператора сложения
         /// </summary>
         /// <param name="map"></param>
-        /// <param name="car"></param>
+        /// <param name="airBomber"></param>
         /// <returns></returns>
-        public static int operator +(MapWithSetAirBombersGeneric<T, U> map, T car)
+        public static int operator +(MapWithSetAirBombersGeneric<T, U> map, T airBomber)
         {
-            return map._setAirBombers.Insert(car);
+            return map._setAirBombers.Insert(airBomber);
         }
         /// <summary>
         /// Перегрузка оператора вычитания
