@@ -53,11 +53,11 @@ namespace AirBomber
         /// Перегрузка оператора сложения
         /// </summary>
         /// <param name="map"></param>
-        /// <param name="car"></param>
+        /// <param name="airBomber"></param>
         /// <returns></returns>
-        public static int operator +(MapWithSetAirBombersGeneric<T, U> map, T car)
+        public static int operator +(MapWithSetAirBombersGeneric<T, U> map, T airBomber)
         {
-            return map._setAirBombers.Insert(car);
+            return map._setAirBombers.Insert(airBomber);
         }
         /// <summary>
         /// Перегрузка оператора вычитания
@@ -88,13 +88,9 @@ namespace AirBomber
         public Bitmap ShowOnMap()
         {
             Shaking();
-            for (int i = 0; i < _setAirBombers.Count; i++)
+            foreach (var airBomber in _setAirBombers.GetAirBombers())
             {
-                var airBomber = _setAirBombers.Get(i);
-                if (airBomber != null)
-                {
-                    return _map.CreateMap(_pictureWidth, _pictureHeight, airBomber);
-                }
+                return _map.CreateMap(_pictureWidth, _pictureHeight, airBomber);
             }
             return new(_pictureWidth, _pictureHeight);
         }
@@ -119,11 +115,11 @@ namespace AirBomber
             int j = _setAirBombers.Count - 1;
             for (int i = 0; i < _setAirBombers.Count; i++)
             {
-                if (_setAirBombers.Get(i) == null)
+                if (_setAirBombers[i] == null)
                 {
                     for (; j > i; j--)
                     {
-                        var car = _setAirBombers.Get(j);
+                        var car = _setAirBombers[j];
                         if (car != null)
                         {
                             _setAirBombers.Insert(car, i);
@@ -163,10 +159,12 @@ namespace AirBomber
         private void DrawAirBombers(Graphics g)
         {
             int numOfObjectsInRow = _pictureWidth / _placeSizeWidth;
-            for (int i = 0; i < _setAirBombers.Count; i++)
+            int i = 0;
+            foreach (var airBomber in _setAirBombers.GetAirBombers())
             {
-                _setAirBombers.Get(i)?.SetObject((numOfObjectsInRow - (i % numOfObjectsInRow) - 1) * _placeSizeWidth, (i / numOfObjectsInRow) * _placeSizeHeight, _pictureWidth, _pictureHeight);
-                _setAirBombers.Get(i)?.DrawingObject(g);
+                airBomber.SetObject((numOfObjectsInRow - (i % numOfObjectsInRow) - 1) * _placeSizeWidth, (i / numOfObjectsInRow) * _placeSizeHeight, _pictureWidth, _pictureHeight);
+                airBomber.DrawingObject(g);
+                i++;
             }
         }
     }

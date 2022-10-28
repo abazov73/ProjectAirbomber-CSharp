@@ -14,44 +14,33 @@ namespace AirBomber
     public partial class FormMapWithSetAirBombers : Form
     {
         /// <summary>
-        /// Объект от класса карты с набором объектов
+        /// Словарь для выпадающего списка
         /// </summary>
-        private MapWithSetAirBombersGeneric<DrawingObjectAirBomber, AbstractMap> _mapAirBombersCollectionGeneric;
+        private readonly Dictionary<string, AbstractMap> _mapsDict = new()
+        {
+            { "Простая карта", new SimpleMap() },
+            {"Городская карта", new CityMap() },
+            {"Линейная карта", new LineMap() }
+        };
+        /// <summary>
+        /// Объект от коллекции карт
+        /// </summary>
+        private readonly MapsCollection _mapsCollection;
 
         public FormMapWithSetAirBombers()
         {
             InitializeComponent();
-        }
-
-        private void comboBoxSelectorMap_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AbstractMap map = null;
-            switch (comboBoxSelectorMap.Text)
+            _mapsCollection = new MapsCollection(pictureBox.Width, pictureBox.Height);
+            comboBoxSelectorMap.Items.Clear();
+            foreach (var elem in _mapsDict)
             {
-                case "Простая карта":
-                    map = new SimpleMap();
-                    break;
-                case "Городская карта":
-                    map = new CityMap();
-                    break;
-                case "Линейная карта":
-                    map = new LineMap();
-                    break;
-            }
-            if (map != null)
-            {
-                _mapAirBombersCollectionGeneric = new MapWithSetAirBombersGeneric<DrawingObjectAirBomber, AbstractMap>(
-                    pictureBox.Width, pictureBox.Height, map);
-            }
-            else
-            {
-                _mapAirBombersCollectionGeneric = null;
+                comboBoxSelectorMap.Items.Add(elem.Key);
             }
         }
 
         private void buttonAddAirBomber_Click(object sender, EventArgs e)
         {
-            if (_mapAirBombersCollectionGeneric == null)
+            if (listBoxMaps.SelectedIndex == -1)
             {
                 return;
             }
@@ -59,10 +48,10 @@ namespace AirBomber
             if (form.ShowDialog() == DialogResult.OK)
             {
                 DrawingObjectAirBomber airBomber = new(form.SelectedAirBomber);
-                if (_mapAirBombersCollectionGeneric + airBomber != -1)
+                if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] + airBomber != -1)
                 {
                     MessageBox.Show("Объект добавлен");
-                    pictureBox.Image = _mapAirBombersCollectionGeneric.ShowSet();
+                    pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
                 }
                 else
                 {
@@ -73,6 +62,10 @@ namespace AirBomber
 
         private void buttonRemoveAirBomber_Click(object sender, EventArgs e)
         {
+            if (listBoxMaps.SelectedIndex == -1)
+            {
+                return;
+            }
             if (string.IsNullOrEmpty(maskedTextBoxPosition.Text))
             {
                 return;
@@ -82,10 +75,10 @@ namespace AirBomber
                 return;
             }
             int pos = Convert.ToInt32(maskedTextBoxPosition.Text);
-            if (_mapAirBombersCollectionGeneric - pos != null)
+            if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] - pos != null)
             {
                 MessageBox.Show("Объект удален");
-                pictureBox.Image = _mapAirBombersCollectionGeneric.ShowSet();
+                pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
             }
             else
             {
@@ -95,20 +88,20 @@ namespace AirBomber
 
         private void buttonShowStorage_Click(object sender, EventArgs e)
         {
-            if (_mapAirBombersCollectionGeneric == null)
+            if (listBoxMaps.SelectedIndex == -1)
             {
                 return;
             }
-            pictureBox.Image = _mapAirBombersCollectionGeneric.ShowSet();
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
         }
 
         private void buttonShowOnMap_Click(object sender, EventArgs e)
         {
-            if (_mapAirBombersCollectionGeneric == null)
+            if (listBoxMaps.SelectedIndex == -1)
             {
                 return;
             }
-            pictureBox.Image = _mapAirBombersCollectionGeneric.ShowOnMap();
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowOnMap();
         }
 
         /// <summary>
@@ -136,7 +129,61 @@ namespace AirBomber
                     dir = Direction.Right;
                     break;
             }
-            pictureBox.Image = _mapAirBombersCollectionGeneric?.MoveObject(dir);
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].MoveObject(dir);
+        }
+
+        private void ReloadMaps()
+        {
+            int index = listBoxMaps.SelectedIndex;
+
+            listBoxMaps.Items.Clear();
+            for (int i = 0; i < _mapsCollection.Keys.Count; i++)
+            {
+                listBoxMaps.Items.Add(_mapsCollection.Keys[i]);
+            }
+
+            if (listBoxMaps.Items.Count > 0 && (index == -1 || index >= listBoxMaps.Items.Count))
+            {
+                listBoxMaps.SelectedIndex = 0;
+            }
+            else if (listBoxMaps.Items.Count > 0 && index > -1 && index < listBoxMaps.Items.Count)
+            {
+                listBoxMaps.SelectedIndex = index;
+            }
+        }
+
+        private void buttonAddMap_Click(object sender, EventArgs e)
+        {
+            if (comboBoxSelectorMap.SelectedIndex == -1 || string.IsNullOrEmpty(textBoxNewMapName.Text))
+            {
+                MessageBox.Show("Не все данные заполнены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!_mapsDict.ContainsKey(comboBoxSelectorMap.Text))
+            {
+                MessageBox.Show("Нет такой карты", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            _mapsCollection.AddMap(textBoxNewMapName.Text, _mapsDict[comboBoxSelectorMap.Text]);
+            ReloadMaps();
+        }
+
+        private void listBoxMaps_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+        }
+
+        private void buttonDeleteMap_Click(object sender, EventArgs e)
+        {
+            if (listBoxMaps.SelectedIndex == -1)
+            {
+                return;
+            }
+            if (MessageBox.Show($"Удалить карту {listBoxMaps.SelectedItem}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                _mapsCollection.DelMap(listBoxMaps.SelectedItem?.ToString() ?? string.Empty);
+                ReloadMaps();
+            }
         }
     }
 }
