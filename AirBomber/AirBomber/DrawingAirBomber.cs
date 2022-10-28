@@ -11,15 +11,15 @@ namespace AirBomber
         /// <summary>
         /// Класс-сущность
         /// </summary>
-        public EntityAirBomber AirBomber { private set; get; }
+        public EntityAirBomber AirBomber { protected set; get; }
         /// <summary>
         /// Левая координата отрисовки бомбардировщика
         /// </summary>
-        private float _startPosX;
+        protected float _startPosX;
         /// <summary>
         /// Верхняя кооридната отрисовки бомбардировщика
         /// </summary>
-        private float _startPosY;
+        protected float _startPosY;
         /// <summary>
         /// Ширина окна отрисовки
         /// </summary>
@@ -42,10 +42,24 @@ namespace AirBomber
         /// <param name="speed">Скорость</param>
         /// <param name="weight">Вес бомбардировщика</param>
         /// <param name="bodyColor">Цвет корпуса</param>
-        public void Init(int speed, float weight, Color bodyColor)
+        public DrawingAirBomber(int speed, float weight, Color bodyColor)
         {
-            AirBomber = new EntityAirBomber();
-            AirBomber.Init(speed, weight, bodyColor);
+            AirBomber = new EntityAirBomber(speed, weight, bodyColor);
+        }
+
+        /// <summary>
+        /// Инициализация свойств
+        /// </summary>
+        /// <param name="speed">Скорость</param>
+        /// <param name="weight">Вес бомбардировщика</param>
+        /// <param name="bodyColor">Цвет корпуса</param>
+        /// <param name="carWidth">Ширина отрисовки бомбардировщика</param>
+        /// <param name="carHeight">Высота отрисовки бомбардировщика</param>
+        protected DrawingAirBomber(int speed, float weight, Color bodyColor, int carWidth, int carHeight) :
+            this(speed, weight, bodyColor)
+        {
+            _airBomberWidth = carWidth;
+            _airBomberHeight = carHeight;
         }
 
         /// <summary>
@@ -113,7 +127,7 @@ namespace AirBomber
         /// Отрисовка бомбардировщика
         /// </summary>
         /// <param name="g"></param>
-        public void DrawTransport(Graphics g)
+        public virtual void DrawTransport(Graphics g)
         {
             if (_startPosX < 0 || _startPosY < 0
             || !_pictureHeight.HasValue || !_pictureWidth.HasValue)
@@ -207,6 +221,15 @@ namespace AirBomber
             {
                 _startPosY = _pictureHeight.Value - _airBomberHeight;
             }
+        }
+
+        /// <summary>
+        /// Получение текущей позиции объекта
+        /// </summary>
+        /// <returns></returns>
+        public (float Left, float Top, float Right, float Bottom) GetCurrentPosition()
+        {
+            return (_startPosX, _startPosY, _startPosX + _airBomberWidth, _startPosY + _airBomberHeight);
         }
     }
 }
