@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AirBomber
 {
-    internal class DrawingAirBomber
+    public class DrawingAirBomber
     {
         /// <summary>
         /// Класс-сущность
