@@ -80,6 +80,7 @@
             this.buttonOk.TabIndex = 8;
             this.buttonOk.Text = "Добавить";
             this.buttonOk.UseVisualStyleBackColor = true;
+            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
             // panelObject
             // 

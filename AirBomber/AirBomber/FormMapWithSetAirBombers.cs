@@ -27,6 +27,10 @@ namespace AirBomber
         /// </summary>
         private readonly MapsCollection _mapsCollection;
 
+        private Action<DrawingAirBomber> AddAction;
+
+        private DrawingObjectAirBomber returnedAirBomber;
+
         public FormMapWithSetAirBombers()
         {
             InitializeComponent();
@@ -36,6 +40,8 @@ namespace AirBomber
             {
                 comboBoxSelectorMap.Items.Add(elem.Key);
             }
+            AddAction = airBomber => { _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].add(new DrawingObjectAirBomber(airBomber));
+                pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();};
         }
 
         private void buttonAddAirBomber_Click(object sender, EventArgs e)
@@ -44,20 +50,9 @@ namespace AirBomber
             {
                 return;
             }
-            FormAirBomber form = new();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                DrawingObjectAirBomber airBomber = new(form.SelectedAirBomber);
-                if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] + airBomber != -1)
-                {
-                    MessageBox.Show("Объект добавлен");
-                    pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
-                }
-                else
-                {
-                    MessageBox.Show("Не удалось добавить объект");
-                }
-            }
+            var formAirBomberConfig = new FormAirBomberConfig();
+            formAirBomberConfig.AddEvent(AddAction);
+            formAirBomberConfig.Show();
         }
 
         private void buttonRemoveAirBomber_Click(object sender, EventArgs e)

@@ -69,6 +69,11 @@ namespace AirBomber
         {
             return map._setAirBombers.Remove(position);
         }
+
+        public void add(T airBomber)
+        {
+            _setAirBombers.Insert(airBomber);
+        }
         /// <summary>
         /// Вывод всего набора объектов
         /// </summary>

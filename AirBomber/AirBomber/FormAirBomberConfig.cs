@@ -14,6 +14,8 @@ namespace AirBomber
     {
         DrawingAirBomber _airBomber = null;
 
+        private event Action<DrawingAirBomber> EventAddAirBomber;
+
         public FormAirBomberConfig()
         {
             InitializeComponent();
@@ -25,6 +27,7 @@ namespace AirBomber
             panelWhite.MouseDown += PanelColor_MouseDown;
             panelYellow.MouseDown += PanelColor_MouseDown;
             panelBlue.MouseDown += PanelColor_MouseDown;
+            buttonCancel.Click += (object sender, EventArgs e) => Close();
         }
 
         private void DrawAirBomber()
@@ -53,6 +56,18 @@ namespace AirBomber
             }
         }
 
+        public void AddEvent(Action<DrawingAirBomber> ev)
+        {
+            if (EventAddAirBomber == null)
+            {
+                EventAddAirBomber = ev;
+            }
+            else
+            {
+                EventAddAirBomber += ev;
+            }
+        }
+
         private void panelObject_DragDrop(object sender, DragEventArgs e)
         {
             switch (e.Data.GetData(DataFormats.Text).ToString())
@@ -75,7 +90,7 @@ namespace AirBomber
 
         private void labelColor_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(Color)))
+            if (e.Data.GetDataPresent(typeof(String)))
             {
                 e.Effect = DragDropEffects.Copy;
             }
@@ -88,6 +103,7 @@ namespace AirBomber
         private void labelBaseColor_DragDrop(object sender, DragEventArgs e)
         {
             _airBomber?.AirBomber?.setColor(Color.FromName(e.Data.GetData(DataFormats.Text).ToString()));
+            DrawAirBomber();
         }
 
         private void labelDopColor_DragDrop(object sender, DragEventArgs e)
@@ -95,7 +111,14 @@ namespace AirBomber
             if (_airBomber.AirBomber is EntityHeavyAirBomber heavyAirBomber)
             {
                 heavyAirBomber.setDopColor(Color.FromName(e.Data.GetData(DataFormats.Text).ToString()));
+                DrawAirBomber();
             }
+        }
+
+        private void buttonOk_Click(object sender, EventArgs e)
+        {
+            EventAddAirBomber?.Invoke(_airBomber);
+            Close();
         }
     }
 }
