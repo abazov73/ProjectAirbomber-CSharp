@@ -41,5 +41,10 @@ namespace AirBomber
             Weight = weight <= 0 ? rnd.Next(40, 70) : weight;
             BodyColor = bodyColor;
         }
+
+        public void setColor(Color newColor)
+        {
+            BodyColor = newColor;
+        }
     }
 }

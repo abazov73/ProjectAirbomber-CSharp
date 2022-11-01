@@ -45,5 +45,10 @@ namespace AirBomber
             FuelTank = fuelTank;
             TailLine = tailLine;
         }
+
+        public void setDopColor(Color newDopColor)
+        {
+            DopColor = newDopColor;
+        }
     }
 }
