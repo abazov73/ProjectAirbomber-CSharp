@@ -29,8 +29,6 @@ namespace AirBomber
 
         private Action<DrawingAirBomber> AddAction;
 
-        private DrawingObjectAirBomber returnedAirBomber;
-
         public FormMapWithSetAirBombers()
         {
             InitializeComponent();
