@@ -44,5 +44,9 @@ namespace AirBomber
                 _airBomber.DrawTransport(g);
             }
         }
+
+        public string GetInfo() => _airBomber?.GetDataForSave();
+
+        public static IDrawingObject Create(string data) => new DrawingObjectAirBomber(data.CreateDrawningAirBomber());
     }
 }

@@ -113,6 +113,31 @@ namespace AirBomber
             return new(_pictureWidth, _pictureHeight);
         }
         /// <summary>
+        /// Получение данных в виде строки
+        /// </summary>
+        /// <param name="sep"></param>
+        /// <returns></returns>
+        public string GetData(char separatorType, char separatorData)
+        {
+            string data = $"{_map.GetType().Name}{separatorType}";
+            foreach (var airBomber in _setAirBombers.GetAirBombers())
+            {
+                data += $"{airBomber.GetInfo()}{separatorData}";
+            }
+            return data;
+        }
+        /// <summary>
+        /// Загрузка списка из массива строк
+        /// </summary>
+        /// <param name="records"></param>
+        public void LoadData(string[] records)
+        {
+            foreach (var rec in records)
+            {
+                _setAirBombers.Insert(DrawingObjectAirBomber.Create(rec) as T);
+            }
+        }
+        /// <summary>
         /// "Взбалтываем" набор, чтобы все элементы оказались в начале
         /// </summary>
         private void Shaking()

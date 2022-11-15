@@ -45,9 +45,16 @@
             this.maskedTextBoxPosition = new System.Windows.Forms.MaskedTextBox();
             this.buttonAddAirBomber = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.groupBoxTools.SuspendLayout();
             this.groupBoxMaps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxTools
@@ -63,9 +70,9 @@
             this.groupBoxTools.Controls.Add(this.maskedTextBoxPosition);
             this.groupBoxTools.Controls.Add(this.buttonAddAirBomber);
             this.groupBoxTools.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBoxTools.Location = new System.Drawing.Point(621, 0);
+            this.groupBoxTools.Location = new System.Drawing.Point(621, 28);
             this.groupBoxTools.Name = "groupBoxTools";
-            this.groupBoxTools.Size = new System.Drawing.Size(261, 671);
+            this.groupBoxTools.Size = new System.Drawing.Size(261, 643);
             this.groupBoxTools.TabIndex = 0;
             this.groupBoxTools.TabStop = false;
             this.groupBoxTools.Text = "Инструменты";
@@ -154,7 +161,7 @@
             this.buttonRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRight.BackgroundImage = global::AirBomber.Properties.Resources.arrowRight;
             this.buttonRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonRight.Location = new System.Drawing.Point(148, 629);
+            this.buttonRight.Location = new System.Drawing.Point(148, 601);
             this.buttonRight.Name = "buttonRight";
             this.buttonRight.Size = new System.Drawing.Size(30, 30);
             this.buttonRight.TabIndex = 18;
@@ -166,7 +173,7 @@
             this.buttonDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDown.BackgroundImage = global::AirBomber.Properties.Resources.arrowDown;
             this.buttonDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonDown.Location = new System.Drawing.Point(112, 629);
+            this.buttonDown.Location = new System.Drawing.Point(112, 601);
             this.buttonDown.Name = "buttonDown";
             this.buttonDown.Size = new System.Drawing.Size(30, 30);
             this.buttonDown.TabIndex = 17;
@@ -178,7 +185,7 @@
             this.buttonLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonLeft.BackgroundImage = global::AirBomber.Properties.Resources.arrowLeft;
             this.buttonLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonLeft.Location = new System.Drawing.Point(76, 629);
+            this.buttonLeft.Location = new System.Drawing.Point(76, 601);
             this.buttonLeft.Name = "buttonLeft";
             this.buttonLeft.Size = new System.Drawing.Size(30, 30);
             this.buttonLeft.TabIndex = 16;
@@ -190,7 +197,7 @@
             this.buttonUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonUp.BackgroundImage = global::AirBomber.Properties.Resources.arrowUp;
             this.buttonUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonUp.Location = new System.Drawing.Point(112, 593);
+            this.buttonUp.Location = new System.Drawing.Point(112, 565);
             this.buttonUp.Name = "buttonUp";
             this.buttonUp.Size = new System.Drawing.Size(30, 30);
             this.buttonUp.TabIndex = 15;
@@ -239,11 +246,54 @@
             // pictureBox
             // 
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox.Location = new System.Drawing.Point(0, 28);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(621, 671);
+            this.pictureBox.Size = new System.Drawing.Size(621, 643);
             this.pictureBox.TabIndex = 1;
             this.pictureBox.TabStop = false;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FileToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(882, 28);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // FileToolStripMenuItem
+            // 
+            this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SaveToolStripMenuItem,
+            this.LoadToolStripMenuItem});
+            this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.FileToolStripMenuItem.Text = "Файл";
+            // 
+            // SaveToolStripMenuItem
+            // 
+            this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.SaveToolStripMenuItem.Text = "Сохранить";
+            this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            // 
+            // LoadToolStripMenuItem
+            // 
+            this.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem";
+            this.LoadToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.LoadToolStripMenuItem.Text = "Загрузить";
+            this.LoadToolStripMenuItem.Click += new System.EventHandler(this.LoadToolStripMenuItem_Click);
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog1";
+            this.openFileDialog.Filter = "txt file | *.txt";
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.Filter = "txt file | *.txt";
             // 
             // FormMapWithSetAirBombers
             // 
@@ -252,6 +302,8 @@
             this.ClientSize = new System.Drawing.Size(882, 671);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.groupBoxTools);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMapWithSetAirBombers";
             this.Text = "Карта с набором объектов";
             this.groupBoxTools.ResumeLayout(false);
@@ -259,7 +311,10 @@
             this.groupBoxMaps.ResumeLayout(false);
             this.groupBoxMaps.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -282,5 +337,11 @@
         private ListBox listBoxMaps;
         private TextBox textBoxNewMapName;
         private ComboBox comboBoxSelectorMap;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem FileToolStripMenuItem;
+        private ToolStripMenuItem SaveToolStripMenuItem;
+        private ToolStripMenuItem LoadToolStripMenuItem;
+        private OpenFileDialog openFileDialog;
+        private SaveFileDialog saveFileDialog;
     }
 }

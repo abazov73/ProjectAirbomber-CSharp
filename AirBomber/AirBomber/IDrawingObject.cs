@@ -39,5 +39,7 @@ namespace AirBomber
         /// </summary>
         /// <returns></returns>
         (float Left, float Top, float Right, float Bottom) GetCurrentPosition();
+
+        string GetInfo();
     }
 }
