@@ -48,9 +48,20 @@ namespace AirBomber
             {
                 return;
             }
-            var formAirBomberConfig = new FormAirBomberConfig();
-            formAirBomberConfig.AddEvent(AddAction);
-            formAirBomberConfig.Show();
+            try
+            {
+                var formAirBomberConfig = new FormAirBomberConfig();
+                formAirBomberConfig.AddEvent(AddAction);
+                formAirBomberConfig.Show();
+            }
+            catch (StorageOverflowException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Неизвестная ошибка: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void buttonRemoveAirBomber_Click(object sender, EventArgs e)
@@ -68,14 +79,21 @@ namespace AirBomber
                 return;
             }
             int pos = Convert.ToInt32(maskedTextBoxPosition.Text);
-            if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] - pos != null)
+            try
             {
-                MessageBox.Show("Объект удален");
-                pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+                if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] - pos != null)
+                {
+                    MessageBox.Show("Объект удален");
+                    pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+                }
             }
-            else
+            catch (AirBomberNotFoundException ex)
             {
-                MessageBox.Show("Не удалось удалить объект");
+                MessageBox.Show($"Ошибка удаления: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Неизвестная ошибка: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -183,13 +201,14 @@ namespace AirBomber
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (_mapsCollection.SaveData(saveFileDialog.FileName))
+                try
                 {
+                    _mapsCollection.SaveData(saveFileDialog.FileName);
                     MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Не сохранилось: {ex.Message}", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -198,14 +217,23 @@ namespace AirBomber
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (_mapsCollection.LoadData(openFileDialog.FileName))
+                try
                 {
+                    _mapsCollection.LoadData(openFileDialog.FileName);
                     MessageBox.Show("Загрузка прошла успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ReloadMaps();
                 }
-                else
+                catch(FileFormatException ex)
                 {
-                    MessageBox.Show("Не загрузилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Не загрузилось: {ex.Message}", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch(FileNotFoundException ex)
+                {
+                    MessageBox.Show($"Не загрузилось: {ex.Message}", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Неизвестная ошибка: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

@@ -87,7 +87,7 @@ namespace AirBomber
         /// </summary>
         /// <param name="filename">Путь и имя файла</param>
         /// <returns></returns>
-        public bool SaveData(string filename)
+        public void SaveData(string filename)
         {
             if (File.Exists(filename))
             {
@@ -102,7 +102,6 @@ namespace AirBomber
                     sw.Write($"{storage.Key}{separatorDict}{storage.Value.GetData(separatorDict, separatorData)}{Environment.NewLine}", sw);
                 }
             }
-            return true;
         }
 
         /// <summary>
@@ -110,11 +109,11 @@ namespace AirBomber
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public bool LoadData(string filename)
+        public void LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new FileNotFoundException("Файл не найден");
             }
             using (FileStream fs = new(filename, FileMode.Open))
             using (StreamReader sr = new StreamReader(fs))
@@ -122,7 +121,7 @@ namespace AirBomber
                 string line;
                 line = sr.ReadLine();
                 line.Trim();
-                if (line != "MapsCollection") return false;
+                if (line != "MapsCollection") throw new FileFormatException("Неверный формат файла");
                 _mapStorages.Clear();
                 while ((line = sr.ReadLine()) != null)
                 {
@@ -145,7 +144,6 @@ namespace AirBomber
                     _mapStorages[elem[0]].LoadData(elem[2].Split(separatorData, StringSplitOptions.RemoveEmptyEntries));
                 }
             }
-            return true;
         }
     }
 }

@@ -36,7 +36,10 @@ namespace AirBomber
         /// <returns></returns>
         public int Insert(T airBomber)
         {
-            if (_places.Count + 1 >= _maxCount) return -1;
+            if (_places.Count + 1 >= _maxCount)
+            {
+                throw new StorageOverflowException(_maxCount);
+            }
             _places.Insert(0, airBomber);
             return 0;
         }
@@ -49,7 +52,10 @@ namespace AirBomber
         public int Insert(T airBomber, int position)
         {
             if (position < 0 || position >= _maxCount) return -1;
-            if (_places.Count + 1 >= _maxCount) return -1;
+            if (_places.Count + 1 >= _maxCount)
+            {
+                throw new StorageOverflowException(_maxCount);
+            }
             _places.Insert(position, airBomber);
             return position;
         }
@@ -60,7 +66,10 @@ namespace AirBomber
         /// <returns></returns>
         public T Remove(int position)
         {
-            if (position < 0 || position >= _maxCount) return null;
+            if (position < 0 || position >= _maxCount)
+            {
+                throw new AirBomberNotFoundException(position);
+            }
             T removedObject = _places[position];
             _places.RemoveAt(position);
             return removedObject;
