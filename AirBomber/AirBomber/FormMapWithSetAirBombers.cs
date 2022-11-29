@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,17 +30,44 @@ namespace AirBomber
 
         private Action<DrawingAirBomber> AddAction;
 
-        public FormMapWithSetAirBombers()
+        private readonly ILogger _logger;
+
+        public FormMapWithSetAirBombers(ILogger<FormMapWithSetAirBombers> logger)
         {
             InitializeComponent();
+            _logger = logger;
             _mapsCollection = new MapsCollection(pictureBox.Width, pictureBox.Height);
             comboBoxSelectorMap.Items.Clear();
             foreach (var elem in _mapsDict)
             {
                 comboBoxSelectorMap.Items.Add(elem.Key);
             }
-            AddAction = airBomber => { _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].add(new DrawingObjectAirBomber(airBomber));
-                pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();};
+            AddAction = addAirBomber;
+        }
+
+        private void addAirBomber(DrawingAirBomber airBomber)
+        {
+            try
+            {
+                int res = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] + new DrawingObjectAirBomber(airBomber);
+                pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+                _logger.LogInformation($"Добавлен объект {airBomber.ToString()}");
+            }
+            catch (ArgumentNullException ex)
+            {
+                MessageBox.Show(ex.Message);
+                _logger.LogWarning($"Ошибка: {ex.Message}");
+            }
+            catch (StorageOverflowException ex)
+            {
+                MessageBox.Show(ex.Message);
+                _logger.LogWarning($"Ошибка: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Неизвестная ошибка: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogWarning($"Ошибка: {ex.Message}");
+            }
         }
 
         private void buttonAddAirBomber_Click(object sender, EventArgs e)
@@ -48,20 +76,9 @@ namespace AirBomber
             {
                 return;
             }
-            try
-            {
-                var formAirBomberConfig = new FormAirBomberConfig();
-                formAirBomberConfig.AddEvent(AddAction);
-                formAirBomberConfig.Show();
-            }
-            catch (StorageOverflowException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Неизвестная ошибка: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            var formAirBomberConfig = new FormAirBomberConfig();
+            formAirBomberConfig.AddEvent(AddAction);
+            formAirBomberConfig.Show();
         }
 
         private void buttonRemoveAirBomber_Click(object sender, EventArgs e)
@@ -81,19 +98,20 @@ namespace AirBomber
             int pos = Convert.ToInt32(maskedTextBoxPosition.Text);
             try
             {
-                if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] - pos != null)
-                {
-                    MessageBox.Show("Объект удален");
-                    pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
-                }
+                IDrawingObject drawingObject = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] - pos;
+                MessageBox.Show("Объект удален");
+                pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+                _logger.LogInformation($"Удалён объект {drawingObject.ToString()}");
             }
             catch (AirBomberNotFoundException ex)
             {
                 MessageBox.Show($"Ошибка удаления: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogWarning($"Ошибка: {ex.Message}");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Неизвестная ошибка: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogWarning($"Ошибка: {ex.Message}");
             }
         }
 
@@ -177,11 +195,13 @@ namespace AirBomber
             }
             _mapsCollection.AddMap(textBoxNewMapName.Text, _mapsDict[comboBoxSelectorMap.Text]);
             ReloadMaps();
+            _logger.LogInformation($"Добавлена карта: {textBoxNewMapName.Text}, тип карты: {comboBoxSelectorMap.Text}");
         }
 
         private void listBoxMaps_SelectedIndexChanged(object sender, EventArgs e)
         {
             pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+            _logger.LogInformation($"Переход на карту {listBoxMaps.SelectedItem?.ToString() ?? string.Empty}"); 
         }
 
         private void buttonDeleteMap_Click(object sender, EventArgs e)
@@ -190,11 +210,13 @@ namespace AirBomber
             {
                 return;
             }
+            string mapName = listBoxMaps.SelectedItem?.ToString();
             if (MessageBox.Show($"Удалить карту {listBoxMaps.SelectedItem}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 _mapsCollection.DelMap(listBoxMaps.SelectedItem?.ToString() ?? string.Empty);
                 ReloadMaps();
             }
+            _logger.LogInformation($"Удалена карта {mapName}");
         }
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -205,10 +227,12 @@ namespace AirBomber
                 {
                     _mapsCollection.SaveData(saveFileDialog.FileName);
                     MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _logger.LogInformation($"Данные сохранены в файл {saveFileDialog.FileName}");
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Не сохранилось: {ex.Message}", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _logger.LogWarning($"Ошибка: {ex.Message}");
                 }
             }
         }
@@ -222,18 +246,22 @@ namespace AirBomber
                     _mapsCollection.LoadData(openFileDialog.FileName);
                     MessageBox.Show("Загрузка прошла успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ReloadMaps();
+                    _logger.LogInformation($"Данные загружены из файла {openFileDialog.FileName}");
                 }
                 catch(FileFormatException ex)
                 {
                     MessageBox.Show($"Не загрузилось: {ex.Message}", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _logger.LogWarning($"Ошибка: {ex.Message}");
                 }
                 catch(FileNotFoundException ex)
                 {
                     MessageBox.Show($"Не загрузилось: {ex.Message}", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _logger.LogWarning($"Ошибка: {ex.Message}");
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Неизвестная ошибка: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _logger.LogWarning($"Ошибка: {ex.Message}");
                 }
             }
         }

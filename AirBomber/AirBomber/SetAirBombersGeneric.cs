@@ -36,7 +36,11 @@ namespace AirBomber
         /// <returns></returns>
         public int Insert(T airBomber)
         {
-            if (_places.Count + 1 >= _maxCount)
+            if (airBomber == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (_places.Count + 1 > _maxCount)
             {
                 throw new StorageOverflowException(_maxCount);
             }
