@@ -55,7 +55,10 @@ namespace AirBomber
         /// <returns></returns>
         public int Insert(T airBomber, int position)
         {
-            if (position < 0 || position >= _maxCount) return -1;
+            if (position < 0 || position >= _maxCount)
+            {
+                throw new AirBomberNotFoundException(position);
+            }
             if (_places.Count + 1 >= _maxCount)
             {
                 throw new StorageOverflowException(_maxCount);
