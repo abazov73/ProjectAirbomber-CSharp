@@ -72,7 +72,7 @@
             this.groupBoxTools.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBoxTools.Location = new System.Drawing.Point(621, 28);
             this.groupBoxTools.Name = "groupBoxTools";
-            this.groupBoxTools.Size = new System.Drawing.Size(261, 643);
+            this.groupBoxTools.Size = new System.Drawing.Size(261, 695);
             this.groupBoxTools.TabIndex = 0;
             this.groupBoxTools.TabStop = false;
             this.groupBoxTools.Text = "Инструменты";
@@ -161,7 +161,7 @@
             this.buttonRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRight.BackgroundImage = global::AirBomber.Properties.Resources.arrowRight;
             this.buttonRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonRight.Location = new System.Drawing.Point(148, 601);
+            this.buttonRight.Location = new System.Drawing.Point(148, 653);
             this.buttonRight.Name = "buttonRight";
             this.buttonRight.Size = new System.Drawing.Size(30, 30);
             this.buttonRight.TabIndex = 18;
@@ -173,7 +173,7 @@
             this.buttonDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDown.BackgroundImage = global::AirBomber.Properties.Resources.arrowDown;
             this.buttonDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonDown.Location = new System.Drawing.Point(112, 601);
+            this.buttonDown.Location = new System.Drawing.Point(112, 653);
             this.buttonDown.Name = "buttonDown";
             this.buttonDown.Size = new System.Drawing.Size(30, 30);
             this.buttonDown.TabIndex = 17;
@@ -185,7 +185,7 @@
             this.buttonLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonLeft.BackgroundImage = global::AirBomber.Properties.Resources.arrowLeft;
             this.buttonLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonLeft.Location = new System.Drawing.Point(76, 601);
+            this.buttonLeft.Location = new System.Drawing.Point(76, 653);
             this.buttonLeft.Name = "buttonLeft";
             this.buttonLeft.Size = new System.Drawing.Size(30, 30);
             this.buttonLeft.TabIndex = 16;
@@ -197,7 +197,7 @@
             this.buttonUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonUp.BackgroundImage = global::AirBomber.Properties.Resources.arrowUp;
             this.buttonUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonUp.Location = new System.Drawing.Point(112, 565);
+            this.buttonUp.Location = new System.Drawing.Point(112, 617);
             this.buttonUp.Name = "buttonUp";
             this.buttonUp.Size = new System.Drawing.Size(30, 30);
             this.buttonUp.TabIndex = 15;
@@ -248,7 +248,7 @@
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox.Location = new System.Drawing.Point(0, 28);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(621, 643);
+            this.pictureBox.Size = new System.Drawing.Size(621, 695);
             this.pictureBox.TabIndex = 1;
             this.pictureBox.TabStop = false;
             // 
@@ -275,14 +275,14 @@
             // SaveToolStripMenuItem
             // 
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
-            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.SaveToolStripMenuItem.Text = "Сохранить";
             this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // LoadToolStripMenuItem
             // 
             this.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem";
-            this.LoadToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.LoadToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.LoadToolStripMenuItem.Text = "Загрузить";
             this.LoadToolStripMenuItem.Click += new System.EventHandler(this.LoadToolStripMenuItem_Click);
             // 
@@ -299,7 +299,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(882, 671);
+            this.ClientSize = new System.Drawing.Size(882, 723);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.groupBoxTools);
             this.Controls.Add(this.menuStrip1);
