@@ -9,7 +9,7 @@ namespace AirBomber
     /// <summary>
     /// Интерфейс для работы с объектом, прорисовываемым на форме
     /// </summary>
-    internal interface IDrawingObject
+    internal interface IDrawingObject : IEquatable<IDrawingObject>
     {
         /// <summary>
 		/// Шаг перемещения объекта

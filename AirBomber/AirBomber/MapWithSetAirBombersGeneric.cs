@@ -137,6 +137,10 @@ namespace AirBomber
                 _setAirBombers.Insert(DrawingObjectAirBomber.Create(rec) as T);
             }
         }
+        public void Sort(IComparer<T> comparer)
+        {
+            _setAirBombers.SortSet(comparer);
+        }
         /// <summary>
         /// "Взбалтываем" набор, чтобы все элементы оказались в начале
         /// </summary>

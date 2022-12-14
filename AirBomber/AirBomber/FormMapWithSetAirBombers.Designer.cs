@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBoxTools = new System.Windows.Forms.GroupBox();
+            this.buttonSortByColor = new System.Windows.Forms.Button();
+            this.buttonSortByType = new System.Windows.Forms.Button();
             this.groupBoxMaps = new System.Windows.Forms.GroupBox();
             this.buttonAddMap = new System.Windows.Forms.Button();
             this.buttonDeleteMap = new System.Windows.Forms.Button();
@@ -59,6 +61,8 @@
             // 
             // groupBoxTools
             // 
+            this.groupBoxTools.Controls.Add(this.buttonSortByColor);
+            this.groupBoxTools.Controls.Add(this.buttonSortByType);
             this.groupBoxTools.Controls.Add(this.groupBoxMaps);
             this.groupBoxTools.Controls.Add(this.buttonShowOnMap);
             this.groupBoxTools.Controls.Add(this.buttonRight);
@@ -72,10 +76,30 @@
             this.groupBoxTools.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBoxTools.Location = new System.Drawing.Point(621, 28);
             this.groupBoxTools.Name = "groupBoxTools";
-            this.groupBoxTools.Size = new System.Drawing.Size(261, 695);
+            this.groupBoxTools.Size = new System.Drawing.Size(261, 744);
             this.groupBoxTools.TabIndex = 0;
             this.groupBoxTools.TabStop = false;
             this.groupBoxTools.Text = "Инструменты";
+            // 
+            // buttonSortByColor
+            // 
+            this.buttonSortByColor.Location = new System.Drawing.Point(6, 534);
+            this.buttonSortByColor.Name = "buttonSortByColor";
+            this.buttonSortByColor.Size = new System.Drawing.Size(243, 29);
+            this.buttonSortByColor.TabIndex = 22;
+            this.buttonSortByColor.Text = "Сортировать по цвету";
+            this.buttonSortByColor.UseVisualStyleBackColor = true;
+            this.buttonSortByColor.Click += new System.EventHandler(this.buttonSortByColor_Click);
+            // 
+            // buttonSortByType
+            // 
+            this.buttonSortByType.Location = new System.Drawing.Point(6, 499);
+            this.buttonSortByType.Name = "buttonSortByType";
+            this.buttonSortByType.Size = new System.Drawing.Size(243, 29);
+            this.buttonSortByType.TabIndex = 21;
+            this.buttonSortByType.Text = "Сортировать по типу";
+            this.buttonSortByType.UseVisualStyleBackColor = true;
+            this.buttonSortByType.Click += new System.EventHandler(this.buttonSortByType_Click);
             // 
             // groupBoxMaps
             // 
@@ -148,7 +172,7 @@
             // 
             // buttonShowOnMap
             // 
-            this.buttonShowOnMap.Location = new System.Drawing.Point(6, 546);
+            this.buttonShowOnMap.Location = new System.Drawing.Point(6, 619);
             this.buttonShowOnMap.Name = "buttonShowOnMap";
             this.buttonShowOnMap.Size = new System.Drawing.Size(243, 41);
             this.buttonShowOnMap.TabIndex = 19;
@@ -161,7 +185,7 @@
             this.buttonRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRight.BackgroundImage = global::AirBomber.Properties.Resources.arrowRight;
             this.buttonRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonRight.Location = new System.Drawing.Point(148, 653);
+            this.buttonRight.Location = new System.Drawing.Point(148, 702);
             this.buttonRight.Name = "buttonRight";
             this.buttonRight.Size = new System.Drawing.Size(30, 30);
             this.buttonRight.TabIndex = 18;
@@ -173,7 +197,7 @@
             this.buttonDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDown.BackgroundImage = global::AirBomber.Properties.Resources.arrowDown;
             this.buttonDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonDown.Location = new System.Drawing.Point(112, 653);
+            this.buttonDown.Location = new System.Drawing.Point(112, 702);
             this.buttonDown.Name = "buttonDown";
             this.buttonDown.Size = new System.Drawing.Size(30, 30);
             this.buttonDown.TabIndex = 17;
@@ -185,7 +209,7 @@
             this.buttonLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonLeft.BackgroundImage = global::AirBomber.Properties.Resources.arrowLeft;
             this.buttonLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonLeft.Location = new System.Drawing.Point(76, 653);
+            this.buttonLeft.Location = new System.Drawing.Point(76, 702);
             this.buttonLeft.Name = "buttonLeft";
             this.buttonLeft.Size = new System.Drawing.Size(30, 30);
             this.buttonLeft.TabIndex = 16;
@@ -197,7 +221,7 @@
             this.buttonUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonUp.BackgroundImage = global::AirBomber.Properties.Resources.arrowUp;
             this.buttonUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonUp.Location = new System.Drawing.Point(112, 617);
+            this.buttonUp.Location = new System.Drawing.Point(112, 666);
             this.buttonUp.Name = "buttonUp";
             this.buttonUp.Size = new System.Drawing.Size(30, 30);
             this.buttonUp.TabIndex = 15;
@@ -206,7 +230,7 @@
             // 
             // buttonShowStorage
             // 
-            this.buttonShowStorage.Location = new System.Drawing.Point(6, 499);
+            this.buttonShowStorage.Location = new System.Drawing.Point(6, 572);
             this.buttonShowStorage.Name = "buttonShowStorage";
             this.buttonShowStorage.Size = new System.Drawing.Size(243, 41);
             this.buttonShowStorage.TabIndex = 14;
@@ -248,7 +272,7 @@
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox.Location = new System.Drawing.Point(0, 28);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(621, 695);
+            this.pictureBox.Size = new System.Drawing.Size(621, 744);
             this.pictureBox.TabIndex = 1;
             this.pictureBox.TabStop = false;
             // 
@@ -299,7 +323,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(882, 723);
+            this.ClientSize = new System.Drawing.Size(882, 772);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.groupBoxTools);
             this.Controls.Add(this.menuStrip1);
@@ -343,5 +367,7 @@
         private ToolStripMenuItem LoadToolStripMenuItem;
         private OpenFileDialog openFileDialog;
         private SaveFileDialog saveFileDialog;
+        private Button buttonSortByColor;
+        private Button buttonSortByType;
     }
 }

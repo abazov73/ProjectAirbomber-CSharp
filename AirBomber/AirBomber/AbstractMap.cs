@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AirBomber
 {
-    internal abstract class AbstractMap
+    internal abstract class AbstractMap : IEquatable<AbstractMap>
     {
         private IDrawingObject _drawningObject = null;
         protected int[,] _map = null;
@@ -113,5 +113,33 @@ namespace AirBomber
         protected abstract void GenerateMap();
         protected abstract void DrawRoadPart(Graphics g, int i, int j);
         protected abstract void DrawBarrierPart(Graphics g, int i, int j);
+
+        public bool Equals(AbstractMap? other)
+        {
+            if (_width != other._width)
+            {
+                return false;
+            }
+            if (_height != other._height)
+            {
+                return false;
+            }
+            if (_size_x != other._size_x)
+            {
+                return false;
+            }
+            if (_size_y != other._size_y)
+            {
+                return false;
+            }
+            for (int i = 0; i < _map.GetLength(0); i++)
+            {
+                for (int j = 0; j < _map.GetLength(1); j++)
+                {
+                    if (other._map[i, j] != _map[j, i]) return false;
+                }
+            }
+            return true;
+        }
     }
 }

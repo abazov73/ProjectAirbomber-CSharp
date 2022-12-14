@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog.Sinks.File;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,7 +45,7 @@ namespace AirBomber
             {
                 throw new StorageOverflowException(_maxCount);
             }
-            _places.Insert(0, airBomber);
+            Insert(airBomber, 0);
             return 0;
         }
         /// <summary>
@@ -55,6 +56,10 @@ namespace AirBomber
         /// <returns></returns>
         public int Insert(T airBomber, int position)
         {
+            foreach(var placedAirBomber in _places)
+            {
+                if ((placedAirBomber as DrawingObjectAirBomber).Equals(airBomber as DrawingObjectAirBomber)) throw new ArgumentException("Такой бомбардировщик уже существует!");
+            }
             if (position < 0 || position >= _maxCount)
             {
                 throw new AirBomberNotFoundException(position);
@@ -116,6 +121,14 @@ namespace AirBomber
                     yield break;
                 }
             }
+        }
+        public void SortSet(IComparer<T> comparer)
+        {
+            if (comparer == null)
+            {
+                return;
+            }
+            _places.Sort(comparer);
         }
     }
 }

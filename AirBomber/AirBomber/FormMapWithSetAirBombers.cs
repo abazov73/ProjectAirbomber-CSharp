@@ -58,6 +58,10 @@ namespace AirBomber
                 MessageBox.Show(ex.Message);
                 _logger.LogWarning($"Ошибка: {ex.Message}");
             }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             catch (StorageOverflowException ex)
             {
                 MessageBox.Show(ex.Message);
@@ -264,6 +268,26 @@ namespace AirBomber
                     _logger.LogWarning($"Ошибка: {ex.Message}");
                 }
             }
+        }
+
+        private void buttonSortByType_Click(object sender, EventArgs e)
+        {
+            if (listBoxMaps.SelectedIndex == -1)
+            {
+                return;
+            }
+            _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].Sort(new AirBomberCompareByType());
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+        }
+
+        private void buttonSortByColor_Click(object sender, EventArgs e)
+        {
+            if (listBoxMaps.SelectedIndex == -1)
+            {
+                return;
+            }
+            _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].Sort(new AirBomberCompareByColor());
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
         }
     }
 }
